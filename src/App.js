@@ -1,14 +1,7 @@
-import logo from './logo.svg';
-import './App.css';
+import HomePage from './Homepage.jsx';
 
 function App() {
-  return (
-    <nav>
-  <a href="#home">Home</a>
-  <a href="#about">About</a>
-  <a href="#contact">Contact</a>
-</nav>
-  );
+  return <HomePage />;
 }
 
 export default App;
