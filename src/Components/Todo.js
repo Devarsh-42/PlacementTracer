@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import '../Components/style.css';
 
 const Todo = () => {
   const [tasks, setTasks] = useState([]);
@@ -13,7 +14,7 @@ const Todo = () => {
     setNewTask("");
   };
 
-  const NavBackHome = () => async () => {
+  const NavBackHome = () => {
     navigate('/');
   };
 
@@ -67,8 +68,8 @@ const Todo = () => {
           ))}
         </ul>
       </div>
-      <button onClick={NavBackHome} className="action-button">
-            Decrement
+      <button onClick={NavBackHome} className="button-grid">
+            Go To Counter
         </button>
     </div>
   );
