@@ -1,8 +1,8 @@
-// components/Login.js
+// Components/Login.js
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './style.css';
 
 const Login = () => {
@@ -10,7 +10,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,10 +18,22 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/'); // Navigate to homepage after successful login
+      // No need for navigation here - the AuthWrapper in App.js will handle redirection
     } catch (error) {
       console.error('Login error:', error);
-      setError(error.message);
+      
+      // More user-friendly error messages
+      if (error.code === 'auth/invalid-email') {
+        setError('Invalid email address format.');
+      } else if (error.code === 'auth/user-not-found') {
+        setError('No account found with this email.');
+      } else if (error.code === 'auth/wrong-password') {
+        setError('Incorrect password.');
+      } else if (error.code === 'auth/too-many-requests') {
+        setError('Too many failed login attempts. Please try again later.');
+      } else {
+        setError(error.message || 'Failed to login. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -54,13 +65,13 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              placeholder="Enter a your Password"
+              placeholder="Enter your Password"
             />
           </div>
           
           <button 
-            type="submit" 
-            disabled={loading} 
+            type="submit"
+            disabled={loading}
             className={`auth-button ${loading ? 'button-disabled' : ''}`}
           >
             {loading ? "Logging in..." : "Login"}

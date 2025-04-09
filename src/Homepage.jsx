@@ -43,6 +43,7 @@ const Homepage = () => {
       console.error("Error signing out: ", error);
     }
   }
+  
 
   // Handle empty or NaN inputs
   const handleStepChange = (e) => {
